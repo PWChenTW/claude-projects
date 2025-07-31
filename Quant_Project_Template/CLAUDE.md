@@ -3,6 +3,17 @@
 ## 項目概述
 這是一個集成了多實例協作、規格驅動開發(SDD)、和專業Sub Agents的AI協作開發模板。
 
+## AI Assistant Guidelines
+
+### Task Delegation Principle
+- **Complex or specialized tasks**: Always delegate to appropriate Sub Agents
+- **Simple queries**: Can be handled directly for efficiency
+- **When in doubt**: Prefer delegation to ensure quality
+
+### General Purpose Agent
+For queries that don't fit specialized agents, use:
+- `general-assistant`: General Q&A, simple tasks, cross-domain coordination
+
 ## 開發方法論整合
 
 ### 規格驅動開發 (SDD) - 主框架
@@ -26,6 +37,15 @@
 - **觸發**: test-engineer 自動介入
 
 ## Sub Agents 自動觸發規則
+
+### general-assistant (通用助手)
+**觸發詞**: 一般問題、簡單任務、不確定、哪個agent、幫助、解釋、什麼是
+**專業領域**: 
+- 一般問答
+- 簡單任務處理
+- 跨領域協調
+- 初步需求分類
+- 基礎交易術語解釋
 
 ### strategy-analyst (策略分析師)
 **觸發詞**: 策略、分析、需求、BDD、場景、評估、可行性

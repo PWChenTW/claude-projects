@@ -28,7 +28,11 @@ ai-collaboration-project/
 │   │   ├── data-engineer.md          # 數據工程師
 │   │   ├── api-specialist.md         # API專家
 │   │   ├── test-engineer.md          # 測試專家
-│   │   └── code-reviewer.md          # 代碼審查員
+│   │   ├── tech-lead.md              # 量化技術主管
+│   │   ├── context-manager.md        # 量化上下文管理專家
+│   │   ├── data-scientist.md         # 數據科學家
+│   │   ├── hft-researcher.md         # 高頻交易研究員
+│   │   └── quant-analyst.md          # 量化分析師
 │   ├── scheduler/                    # 任務調度器
 │   │   ├── spec_scheduler.py         # 主調度器
 │   │   ├── progress_tracker.py       # 進度追蹤
@@ -177,13 +181,18 @@ claude-code
 
 ### 3. Sub Agents專業分工
 
-5個專業Sub Agent處理不同領域：
+10個專業Sub Agent處理不同領域：
 
 - **strategy-analyst**：策略分析和BDD場景生成
 - **risk-manager**：風險管理和倉位控制
 - **data-engineer**：數據處理和特徵工程
 - **api-specialist**：API集成和性能優化
 - **test-engineer**：自動化測試和品質保證
+- **tech-lead**：技術決策和系統優化
+- **context-manager**：策略知識和文檔管理
+- **data-scientist**：機器學習和統計建模
+- **hft-researcher**：高頻交易和市場微觀結構
+- **quant-analyst**：量化研究和金融建模
 
 ### 4. Hooks自動化
 

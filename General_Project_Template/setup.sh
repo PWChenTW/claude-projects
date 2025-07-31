@@ -104,6 +104,8 @@ cat > .kiro/steering/collaboration.md << 'EOF'
 - data-specialist: 數據結構和算法
 - integration-specialist: API和系統集成
 - test-engineer: 測試和品質保證
+- tech-lead: 技術決策和代碼審查
+- context-manager: 知識管理和文檔維護
 
 ## 多實例協作流程
 1. 角色分配和責任劃分
@@ -246,6 +248,7 @@ fi
 chmod +x test_setup.sh
 chmod +x .claude/scheduler/spec_scheduler.py
 chmod +x .claude/scheduler/quality_check.py
+chmod +x .claude/scheduler/security_check.py
 chmod +x scripts/monitoring/view_command_audit.py
 
 echo "✅ 腳本權限設置完成"

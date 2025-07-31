@@ -21,12 +21,14 @@ claude-code
 - **DDD** (領域驅動) 處理設計
 - **TDD** (測試驅動) 確保品質
 
-### 👥 **5個專業Sub Agents**
+### 👥 **7個專業Sub Agents**
 - `business-analyst` - 業務分析師
 - `architect` - 系統架構師
 - `data-specialist` - 數據專家
 - `integration-specialist` - 集成專家
 - `test-engineer` - 測試工程師
+- `tech-lead` - 技術主管
+- `context-manager` - 上下文管理專家
 
 ### ⚡ **自動化Hooks**
 - 代碼格式化

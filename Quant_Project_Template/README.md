@@ -21,12 +21,17 @@ claude-code
 - **DDD** (領域驅動) 處理設計
 - **TDD** (測試驅動) 確保品質
 
-### 👥 **5個專業Sub Agents**
+### 👥 **10個專業Sub Agents**
 - `strategy-analyst` - 策略分析師
 - `risk-manager` - 風控專家
 - `data-engineer` - 數據工程師
 - `api-specialist` - API專家
 - `test-engineer` - 測試工程師
+- `tech-lead` - 量化技術主管
+- `context-manager` - 量化上下文管理專家
+- `data-scientist` - 數據科學家
+- `hft-researcher` - 高頻交易研究員
+- `quant-analyst` - 量化分析師
 
 ### ⚡ **自動化Hooks**
 - 代碼格式化

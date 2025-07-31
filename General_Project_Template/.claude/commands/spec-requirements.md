@@ -9,7 +9,7 @@
 
 這個命令會自動：
 
-1. **調用strategy-analyst**
+1. **調用business-analyst**
    - 深入分析業務需求
    - 識別關鍵使用場景
    - 評估技術可行性
@@ -101,14 +101,14 @@ Then [錯誤處理]
 ## 示例
 
 ```bash
-> /spec-requirements rsi-strategy
+> /spec-requirements user-auth
 ```
 
-會調用 `strategy-analyst` 分析RSI策略需求，生成包含以下場景的BDD文檔：
-- RSI超賣買入場景
-- RSI超買賣出場景
-- 風控觸發場景
-- 市場異常處理場景
+會調用 `business-analyst` 分析用戶認證需求，生成包含以下場景的BDD文檔：
+- 用戶註冊場景
+- 用戶登入場景
+- 權限驗證場景
+- 錯誤處理場景
 
 ## 質量檢查
 

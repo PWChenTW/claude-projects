@@ -60,37 +60,38 @@
 
 ### 實體設計
 ```python
-class TradingStrategy(Entity):
-    """交易策略聚合根"""
-    def __init__(self, strategy_id: StrategyId, name: str):
-        self.id = strategy_id
-        self.name = name
-        self.parameters = {}
-        self.signals = []
+class User(Entity):
+    """用戶聚合根"""
+    def __init__(self, user_id: UserId, email: str):
+        self.id = user_id
+        self.email = email
+        self.profile = UserProfile()
+        self.roles = []
     
-    def generate_signal(self, market_data: MarketData) -> Signal:
-        """生成交易信號"""
+    def assign_role(self, role: Role) -> None:
+        """分配角色"""
         pass
 ```
 
 ### 值對象設計
 ```python
 @dataclass(frozen=True)
-class Signal(ValueObject):
-    """交易信號值對象"""
-    symbol: str
-    timestamp: datetime
-    action: SignalAction
-    confidence: Decimal
-    metadata: Dict[str, Any]
+class UserProfile(ValueObject):
+    """用戶資料值對象"""
+    name: str
+    avatar_url: Optional[str]
+    created_at: datetime
+    preferences: Dict[str, Any]
 ```
 
 ### 領域服務
 ```python
-class SignalGenerationService:
-    """信號生成領域服務"""
-    def generate_signals(self, strategy: TradingStrategy, 
-                        market_data: MarketData) -> List[Signal]:
+class AuthenticationService:
+    """認證領域服務"""
+    def authenticate(self, credentials: Credentials) -> AuthResult:
+        pass
+    
+    def validate_token(self, token: str) -> Optional[User]:
         pass
 ```
 
@@ -107,34 +108,34 @@ Infrastructure Layer # 倉儲實現、外部API
 
 ### 組件圖
 ```
-[Strategy Service] → [Risk Manager] → [Order Service]
-        ↓                ↓               ↓
-[Market Data API] → [Position Manager] → [Broker API]
+[Auth Service] → [User Service] → [Permission Service]
+        ↓              ↓                ↓
+[Token Manager] → [Profile Manager] → [Role Manager]
 ```
 
 ## 技術規格
 
 ### API設計
-- 策略管理API：`/api/strategies`
-- 信號查詢API：`/api/signals`
-- 風控檢查API：`/api/risk-check`
+- 用戶管理API：`/api/users`
+- 認證API：`/api/auth`
+- 權限檢查API：`/api/permissions`
 
 ### 數據模型
-- 策略配置表
-- 信號歷史表
-- 風控記錄表
+- 用戶表
+- 角色權限表
+- 認證記錄表
 
 ### 性能要求
-- 信號生成延遲：< 100ms
-- 並發處理能力：1000 req/sec
-- 數據處理量：10MB/min
+- 認證響應時間：< 200ms
+- 並發處理能力：5000 req/sec
+- Token驗證速度：< 50ms
 
 ## 實施計劃
 
 ### 開發優先級
 1. 核心領域模型
-2. 信號生成邏輯
-3. 風控集成
+2. 認證流程
+3. 權限管理
 4. API接口
 5. 測試覆蓋
 
@@ -167,23 +168,23 @@ Infrastructure Layer # 倉儲實現、外部API
 3. **通用語言**：一致的術語使用
 4. **依賴倒置**：領域層不依賴基礎設施
 
-### 量化交易特殊考量
-1. **實時性要求**：低延遲設計
+### 通用系統特殊考量
+1. **安全性要求**：多層安全防護
 2. **數據一致性**：事務邊界清晰
-3. **風險控制**：每層都有風控檢查
+3. **可擴展性**：模組化設計
 4. **審計追蹤**：完整的操作記錄
 
 ## 示例
 
 ```bash
-> /spec-design rsi-strategy
+> /spec-design user-auth
 ```
 
-會基於RSI策略的需求分析，設計包含：
-- RSIStrategy實體
-- SignalGeneration領域服務
-- RiskValidation值對象
-- MarketDataRepository接口
+會基於用戶認證的需求分析，設計包含：
+- User實體
+- AuthenticationService領域服務
+- UserProfile值對象
+- UserRepository接口
 
 ## 質量檢查
 
@@ -192,7 +193,7 @@ Infrastructure Layer # 倉儲實現、外部API
 - [ ] 架構分層清晰
 - [ ] 接口定義明確
 - [ ] 性能需求可達成
-- [ ] 風控機制完善
+- [ ] 安全機制完善
 
 ## 人工審核點
 
@@ -200,6 +201,6 @@ Infrastructure Layer # 倉儲實現、外部API
 1. 架構設計合理
 2. 技術選型適當
 3. 性能指標可達成
-4. 風險控制充分
+4. 安全控制充分
 
 通過審核後使用 `/spec-tasks [功能名稱]` 進入下一階段。

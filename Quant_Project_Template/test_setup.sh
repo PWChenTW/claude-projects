@@ -40,6 +40,11 @@ AGENTS=(
     "data-engineer"
     "api-specialist"
     "test-engineer"
+    "tech-lead"
+    "context-manager"
+    "data-scientist"
+    "hft-researcher"
+    "quant-analyst"
 )
 
 MISSING_AGENTS=()

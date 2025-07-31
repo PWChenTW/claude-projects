@@ -22,7 +22,9 @@ general-ai-project/
 │   │   ├── architect.md              # 系統架構師
 │   │   ├── data-specialist.md        # 數據專家
 │   │   ├── integration-specialist.md # 集成專家
-│   │   └── test-engineer.md          # 測試工程師
+│   │   ├── test-engineer.md          # 測試工程師
+│   │   ├── tech-lead.md              # 技術主管
+│   │   └── context-manager.md        # 上下文管理專家
 │   ├── scheduler/                    # 任務調度器
 │   │   ├── spec_scheduler.py         # 主調度器
 │   │   ├── quality_check.py          # 品質檢查
@@ -120,6 +122,16 @@ general-ai-project/
 - **專長**: 測試策略、自動化測試、品質保證
 - **觸發詞**: 測試、單元測試、整合測試、品質、覆蓋率
 - **輸出**: 全面的測試計劃和自動化測試套件
+
+#### tech-lead (技術主管)
+- **專長**: 技術領導、代碼審查、技術債管理
+- **觸發詞**: 技術決策、代碼審查、團隊、技術債、重構
+- **輸出**: 技術決策記錄和代碼品質報告
+
+#### context-manager (上下文管理專家)
+- **專長**: 知識管理、文檔維護、信息同步
+- **觸發詞**: 文檔、知識、上下文、記錄、歷史、決策
+- **輸出**: 整合的項目知識庫和文檔更新
 
 ## 🔄 開發方法論整合
 

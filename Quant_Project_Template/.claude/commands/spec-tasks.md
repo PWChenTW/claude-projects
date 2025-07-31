@@ -247,6 +247,11 @@
 - **data-engineer**: 3個任務，專注數據處理
 - **api-specialist**: 3個任務，專注API集成
 - **test-engineer**: 7個任務，確保品質保證
+- **tech-lead**: 協調技術決策，代碼審核
+- **context-manager**: 管理策略文檔和知識庫
+- **data-scientist**: 機器學習模型開發
+- **hft-researcher**: 高頻交易優化
+- **quant-analyst**: 量化策略研究
 
 ### 關鍵里程碑
 1. **Day 1**: 基礎設施完成

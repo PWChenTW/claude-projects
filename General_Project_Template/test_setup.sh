@@ -40,6 +40,8 @@ AGENTS=(
     "data-specialist"
     "integration-specialist"
     "test-engineer"
+    "tech-lead"
+    "context-manager"
 )
 
 MISSING_AGENTS=()
@@ -171,6 +173,18 @@ else
     echo "❌ 品質檢查腳本不存在"
 fi
 
+# 測試安全檢查
+echo "🔒 測試安全檢查..."
+if [ -f ".claude/scheduler/security_check.py" ]; then
+    if python3 .claude/scheduler/security_check.py 2>/dev/null; then
+        echo "✅ 安全檢查腳本正常"
+    else
+        echo "⚠️  安全檢查腳本需要調整"
+    fi
+else
+    echo "❌ 安全檢查腳本不存在"
+fi
+
 # 測試監控腳本
 echo "📊 測試監控功能..."
 if [ -f "scripts/monitoring/view_command_audit.py" ]; then
@@ -209,7 +223,7 @@ fi
 echo ""
 echo "🎯 測試結果總結:"
 
-TOTAL_CHECKS=10
+TOTAL_CHECKS=11
 PASSED_CHECKS=0
 
 # 簡化評估邏輯
@@ -222,6 +236,7 @@ if command -v python3 &> /dev/null; then ((PASSED_CHECKS++)); fi
 if command -v git &> /dev/null; then ((PASSED_CHECKS++)); fi
 if [ -f ".claude/scheduler/spec_scheduler.py" ]; then ((PASSED_CHECKS++)); fi
 if [ -f ".claude/scheduler/quality_check.py" ]; then ((PASSED_CHECKS++)); fi
+if [ -f ".claude/scheduler/security_check.py" ]; then ((PASSED_CHECKS++)); fi
 if [ ${#MISSING_KB[@]} -eq 0 ]; then ((PASSED_CHECKS++)); fi
 
 if [ $PASSED_CHECKS -eq $TOTAL_CHECKS ]; then

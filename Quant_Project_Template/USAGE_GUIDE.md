@@ -7,7 +7,7 @@
 1. **Claude-Claude Code 多實例協作** - 支援多個實例並行工作
 2. **規格驅動開發 (SDD)** - 結構化的開發流程
 3. **整合式方法論** - BDD + DDD + TDD 的完美結合
-4. **Sub Agents 專業分工** - 5個專業AI助手
+4. **Sub Agents 專業分工** - 10個專業AI助手
 5. **Hooks 自動化** - 無需人工提醒的品質保證
 6. **量化交易專業功能** - 針對金融領域優化
 
@@ -230,6 +230,86 @@ claude-code --role test
 > 讓 test-engineer 檢查我的測試覆蓋率
 
 > 請 test-engineer 創建性能基準測試
+```
+
+### tech-lead (量化技術主管)
+**最佳使用時機**：
+- 技術決策
+- 性能優化
+- 系統穩定性
+- 架構審查
+
+**使用範例**：
+```bash
+> 使用 tech-lead 審查交易系統架構
+
+> 讓 tech-lead 評估系統延遲優化方案
+
+> 請 tech-lead 制定技術標準
+```
+
+### context-manager (量化上下文管理專家)
+**最佳使用時機**：
+- 策略文檔管理
+- 知識庫維護
+- 市場情報整理
+- 決策記錄
+
+**使用範例**：
+```bash
+> 使用 context-manager 整理策略研究文檔
+
+> 讓 context-manager 更新市場事件記錄
+
+> 請 context-manager 維護策略變更歷史
+```
+
+### data-scientist (數據科學家)
+**最佳使用時機**：
+- 機器學習建模
+- 統計分析
+- 因子研究
+- 預測模型
+
+**使用範例**：
+```bash
+> 使用 data-scientist 開發預測模型
+
+> 讓 data-scientist 進行因子相關性分析
+
+> 請 data-scientist 優化特徵選擇
+```
+
+### hft-researcher (高頻交易研究員)
+**最佳使用時機**：
+- 市場微觀結構分析
+- 延遲優化
+- 訂單執行研究
+- 高頻策略開發
+
+**使用範例**：
+```bash
+> 使用 hft-researcher 分析訂單簿動態
+
+> 讓 hft-researcher 優化執行算法
+
+> 請 hft-researcher 評估網絡延遲影響
+```
+
+### quant-analyst (量化分析師)
+**最佳使用時機**：
+- 金融建模
+- 衍生品定價
+- 投資組合優化
+- 風險建模
+
+**使用範例**：
+```bash
+> 使用 quant-analyst 建立期權定價模型
+
+> 讓 quant-analyst 優化投資組合配置
+
+> 請 quant-analyst 分析風險敞口
 ```
 
 ## 🔧 Hooks 自動化功能

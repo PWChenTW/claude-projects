@@ -24,19 +24,19 @@
    - 功能基本信息
 
 3. **觸發需求分析階段**
-   - 自動調用 `strategy-analyst` 進行BDD需求分析
+   - 自動調用 `business-analyst` 進行BDD需求分析
    - 或提示進入下一階段
 
 ## 示例
 
 ```bash
-> /spec-init rsi-strategy "實現基於RSI的均值回歸交易策略"
+> /spec-init user-auth "實現用戶認證和授權系統"
 ```
 
 這將創建：
-- 目錄：`.kiro/specs/rsi-strategy/`
+- 目錄：`.kiro/specs/user-auth/`
 - 狀態：等待BDD需求分析
-- 下一步：使用 `/spec-requirements rsi-strategy` 進行需求分析
+- 下一步：使用 `/spec-requirements user-auth` 進行需求分析
 
 ## 規格狀態流程
 

@@ -1,5 +1,27 @@
 # Claude Code 專案配置
 
+## 核心開發原則
+
+### 漸進式開發 (Progressive Development)
+- **Start Small**: 從最簡單的策略開始，先確保基本邏輯正確
+- **Iterate Fast**: 快速迭代，每次只增加一個指標或規則
+- **Backtest Early**: 儘早回測，避免累積錯誤
+- **MVP First**: 先做出最小可行策略，再逐步優化
+
+### 批判性思考 (Critical Thinking)
+- **質疑策略**: 主動評估策略邏輯的合理性
+- **挑戰假設**: 不盲目相信歷史數據，要驗證假設
+- **風險評估**: 始終將風險管理放在首位
+- **誠實反饋**: 如果策略有明顯缺陷，直接指出
+
+### 實用主義 (Pragmatism)
+- **避免過度優化**: 不要過度擬合歷史數據
+- **KISS原則**: Keep It Simple, Stupid - 簡單策略往往更穩定
+- **穩定優先**: 先確保策略穩定運行，再考慮收益優化
+- **風控優先**: 寧可錯過機會，不可承擔過大風險
+
+詳見 `docs/guides/mvp-development.md` 了解策略 MVP 開發最佳實踐。
+
 ## 項目概述
 這是一個集成了多實例協作、規格驅動開發(SDD)、和專業Sub Agents的AI協作開發模板。
 
@@ -35,6 +57,38 @@ For queries that don't fit specialized agents, use:
 - **目標**: 確保關鍵計算邏輯的正確性
 - **應用**: implementation階段，特別是金融計算
 - **觸發**: test-engineer 自動介入
+
+## Sub Agents 調用指導
+
+### 🔴 重要：調用 Sub Agent 時的必要提醒
+
+在調用任何 Sub Agent 執行任務時，**必須**在 prompt 中包含以下指示：
+
+```
+【重要】開始任務前，請先閱讀並理解 .claude/agents/_core_principles.md 文件中的核心開發原則。
+
+【具體任務】
+[任務描述]
+
+【預期產出】
+請基於核心開發原則（MVP優先、漸進式開發、批判性思考、實用主義），提供最簡單可行的策略方案。
+特別注意：從單一指標開始、固定參數、簡單風控、避免過度優化。
+```
+
+如果 Sub Agent 無法訪問文件，則使用以下備用 prompt：
+
+```
+【核心開發原則摘要】
+1. 策略 MVP - 從最簡單的策略開始，單一信號即可
+2. 漸進式開發 - 先驗證核心邏輯，再優化細節
+3. 批判性思考 - 質疑策略假設，避免過度擬合
+4. 風控優先 - 簡單策略往往更穩健，永遠設置止損
+
+【具體任務】
+[任務描述]
+```
+
+這確保所有 Sub Agents 都遵循相同的開發理念。
 
 ## Sub Agents 自動觸發規則
 
@@ -210,8 +264,14 @@ feature-name/
 ### 分支策略
 - `main`: 穩定版本
 - `feature/[feature-name]`: 功能開發分支
+- `strategy/[strategy-name]`: 策略專用分支
 - `role/[role-name]`: 角色專用分支
 - `integration`: 整合測試分支
+
+### 並行開發
+- **Git Worktree**: 用於獨立策略或模組的並行開發
+- **多實例協作**: 用於策略、風控、數據的協同開發
+- 詳見 `docs/guides/parallel-workflow.md`
 
 ### 同步機制
 1. 每日同步會議（虛擬）

@@ -37,6 +37,13 @@ claude-code
 # Initialize a new feature with Spec-Driven Development (SDD)
 /spec-init [feature-name] [description]
 
+# Context Engineering Commands
+/spec-generate-prp [feature-name]  # Generate implementation blueprint
+/spec-ultrathink [feature-name]    # Deep analysis before implementation
+
+# Validate feature context completeness
+python .claude/scheduler/context_validator.py [feature-name]
+
 # Check project progress
 python .claude/scheduler/spec_scheduler.py report
 
@@ -47,11 +54,12 @@ python scripts/monitoring/view_command_audit.py
 ## Architecture
 
 ### Template Structure
-Each template follows a Spec-Driven Development (SDD) approach with:
+Each template follows a Spec-Driven Development (SDD) approach enhanced with Context Engineering principles:
+- **Context-first development** with comprehensive feature context requirements
 - **Multi-instance collaboration** support for different roles
 - **Sub Agents** for specialized tasks
-- **Automated quality checks** and hooks
-- **Knowledge base** in `.kiro/` directory
+- **Automated quality checks** including context validation
+- **Knowledge base** in `.kiro/` directory with context engineering guidelines
 
 ### Sub Agents by Template
 
@@ -79,11 +87,13 @@ Each template follows a Spec-Driven Development (SDD) approach with:
 ### Key Directories
 - `.claude/`: AI collaboration configuration
   - `agents/`: Sub Agent definitions
-  - `commands/`: Slash command implementations
-  - `scheduler/`: Task scheduling and quality checks
+  - `commands/`: Slash command implementations (including context engineering commands)
+  - `scheduler/`: Task scheduling, quality checks, and context validation
   - `settings.json`: Hooks configuration
 - `.kiro/`: Project knowledge base
-  - `steering/`: Core project knowledge (product, tech, methodology)
-  - `specs/`: Feature specifications with SDD workflow
+  - `steering/`: Core project knowledge (product, tech, methodology, context engineering principles)
+  - `specs/`: Feature specifications with SDD workflow and implementation blueprints
 - `docs/`: Documentation and quick references
+  - `examples/`: Code patterns and implementation examples for context
 - `scripts/monitoring/`: Audit and monitoring tools
+- `INITIAL.md`: Feature specification template following context engineering format

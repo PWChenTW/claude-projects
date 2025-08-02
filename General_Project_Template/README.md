@@ -17,6 +17,7 @@ claude-code
 
 ### 🤖 **整合式開發方法論**
 - **SDD** (規格驅動) 作為主框架
+- **Context Engineering** (上下文工程) 確保完整的功能上下文
 - **BDD** (行為驅動) 處理需求
 - **DDD** (領域驅動) 處理設計
 - **TDD** (測試驅動) 確保品質
@@ -44,21 +45,30 @@ claude-code
 
 ## 📖 使用指南
 
-### 標準SDD流程
+### 標準SDD流程 + Context Engineering
 ```bash
 # 1. 初始化功能規格
 > /spec-init [功能名稱] [描述]
 
-# 2. BDD需求分析
+# 2. 生成實作藍圖 (Context Engineering)
+> /spec-generate-prp [功能名稱]
+
+# 3. 深度分析 (ULTRATHINK)
+> /spec-ultrathink [功能名稱]
+
+# 4. BDD需求分析
 > /spec-requirements [功能名稱]
 
-# 3. DDD技術設計
+# 5. DDD技術設計
 > /spec-design [功能名稱]
 
-# 4. 任務分解
+# 6. 任務分解
 > /spec-tasks [功能名稱]
 
-# 5. 開始實施
+# 7. 驗證上下文完整性
+> python .claude/scheduler/context_validator.py [功能名稱]
+
+# 8. 開始實施
 > 現在開始實施 [功能名稱]
 ```
 
@@ -89,17 +99,19 @@ python .claude/scheduler/spec_scheduler.py report
 ├── AI_COLLABORATION_TEMPLATE.md    # 完整模板說明
 ├── USAGE_GUIDE.md                 # 詳細使用指南
 ├── CLAUDE.md                      # Claude Code配置
+├── INITIAL.md                     # 功能規格模板 (Context Engineering)
 ├── setup.sh                       # 一鍵設置腳本
 ├── test_setup.sh                  # 環境測試腳本
 ├── .claude/
 │   ├── agents/                    # Sub Agents配置
-│   ├── commands/                  # Slash Commands
-│   ├── scheduler/                 # 任務調度器
+│   ├── commands/                  # Slash Commands (含Context Engineering)
+│   ├── scheduler/                 # 任務調度器 + 上下文驗證器
 │   └── settings.json              # Hooks配置
 ├── .kiro/
-│   ├── steering/                  # 項目知識庫
-│   └── specs/                     # 功能規格
-├── docs/                          # 文檔目錄
+│   ├── steering/                  # 項目知識庫 (含上下文工程原則)
+│   └── specs/                     # 功能規格與實作藍圖
+├── docs/
+│   └── examples/                  # 程式碼模式與範例 (Context Engineering)
 ├── src/                           # 源代碼
 ├── tests/                         # 測試代碼
 └── scripts/                       # 工具腳本

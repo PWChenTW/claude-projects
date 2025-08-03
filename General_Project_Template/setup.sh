@@ -27,8 +27,10 @@ echo "📁 創建目錄結構..."
 mkdir -p .claude/agents
 mkdir -p .claude/commands  
 mkdir -p .claude/scheduler/logs
+mkdir -p .claude/scripts
 mkdir -p .kiro/steering
 mkdir -p .kiro/specs
+mkdir -p .kiro/logs/archive
 mkdir -p docs/quick_reference
 mkdir -p docs/examples/code_patterns
 mkdir -p docs/examples/feature_implementations
@@ -264,7 +266,14 @@ chmod +x .claude/scheduler/spec_scheduler.py
 chmod +x .claude/scheduler/quality_check.py
 chmod +x .claude/scheduler/security_check.py
 chmod +x .claude/scheduler/context_validator.py
+chmod +x .claude/scripts/update_task_log.py
 chmod +x scripts/monitoring/view_command_audit.py
+
+# 確保委派檢查清單存在
+if [ ! -f ".claude/AGENT_DELEGATION_CHECKLIST.md" ]; then
+    echo "⚠️  創建委派檢查清單..."
+    touch .claude/AGENT_DELEGATION_CHECKLIST.md
+fi
 
 echo "✅ 腳本權限設置完成"
 
@@ -323,6 +332,7 @@ echo "🔧 有用的命令："
 echo "• ./test_setup.sh - 檢查環境狀態"
 echo "• python .claude/scheduler/spec_scheduler.py report - 查看項目進度"
 echo "• python .claude/scheduler/context_validator.py - 驗證上下文完整性"
+echo "• python .claude/scripts/update_task_log.py - 記錄任務執行"
 echo "• python scripts/monitoring/view_command_audit.py - 查看命令統計"
 echo ""
 

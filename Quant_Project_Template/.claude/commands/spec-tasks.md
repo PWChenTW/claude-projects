@@ -23,12 +23,13 @@
 3. **生成任務清單**
    - 保存到 `.kiro/specs/[feature-name]/tasks.md`
    - 更新規格狀態為 `implementation`
+   - 執行任務記錄：`python .claude/scripts/update_task_log.py`
 
 ## 任務分解原則
 
 ### 1. 測試優先 (TDD)
 - 每個核心邏輯都先寫測試
-- 特別是金融計算和風控邏輯
+- 特別是業務規則和安全邏輯
 - 確保業務邏輯的正確性
 
 ### 2. 依賴順序
@@ -36,14 +37,20 @@
 - 再實現領域層
 - 最後實現應用層
 
-### 3. 風險優先
-- 高風險組件優先實現
+### 3. 重要性優先
+- 高重要性組件優先實現
 - 關鍵路徑優先處理
 - 性能瓶頸提前驗證
 
-### 4. Sub Agent分工
-- 每個任務分配給最適合的Agent
-- 確保專業分工
+### 4. Sub Agent分工 (強制規則)
+- 每個任務**必須**分配給最適合的Agent
+- **禁止**主助手直接實作任務
+- 確保專業分工：
+  - 架構任務 → `architect`
+  - 業務邏輯 → `business-analyst`
+  - 算法實作 → `data-specialist`
+  - API開發 → `integration-specialist`
+  - 測試設計 → `test-engineer`
 - 避免重複工作
 
 ## 輸出格式
@@ -57,20 +64,20 @@
 - 總任務數：XX個
 - 預估工期：X天
 - 關鍵路徑：[關鍵任務]
-- 風險任務：[高風險任務]
+- 重要任務：[高重要性任務]
 
 ## 階段1：基礎設施 (Foundation)
 
 ### Task 1.1: 建立領域模型基礎
-**負責Agent**: strategy-analyst + test-engineer
+**負責Agent**: business-analyst + test-engineer
 **優先級**: High
 **預估時間**: 2小時
 **依賴**: 無
 
 **描述**: 實現核心領域實體和值對象
-- [ ] 創建TradingStrategy實體 (TDD)
-- [ ] 實現Signal值對象 (TDD)
-- [ ] 設計StrategyId識別碼
+- [ ] 創建User實體 (TDD)
+- [ ] 實現UserProfile值對象 (TDD)
+- [ ] 設計UserId識別碼
 - [ ] 單元測試覆蓋率 > 90%
 
 **驗收標準**:
@@ -79,13 +86,13 @@
 - [ ] 代碼符合DDD模式
 
 ### Task 1.2: 設計倉儲接口
-**負責Agent**: data-engineer + api-specialist
+**負責Agent**: architect + data-specialist
 **優先級**: High
 **預估時間**: 1.5小時
 **依賴**: Task 1.1
 
 **描述**: 實現數據存取抽象層
-- [ ] 定義IStrategyRepository接口
+- [ ] 定義IUserRepository接口
 - [ ] 實現內存版本（測試用）
 - [ ] 設計數據模型映射
 - [ ] 創建倉儲測試套件
@@ -97,87 +104,87 @@
 
 ## 階段2：核心邏輯 (Core Logic)
 
-### Task 2.1: 實現RSI計算邏輯
-**負責Agent**: data-engineer + test-engineer
+### Task 2.1: 實現用戶認證邏輯
+**負責Agent**: architect + test-engineer
 **優先級**: High
 **預估時間**: 3小時
 **依賴**: Task 1.1
 
-**描述**: 實現技術指標計算 (TDD)
-- [ ] 編寫RSI計算測試案例
-- [ ] 實現RSI計算算法
-- [ ] 性能優化（向量化）
-- [ ] 邊界條件處理
+**描述**: 實現認證系統 (TDD)
+- [ ] 編寫認證測試案例
+- [ ] 實現密碼加密算法
+- [ ] JWT令牌生成
+- [ ] 會話管理處理
 
 **驗收標準**:
-- [ ] 計算結果精確度 99.9%
-- [ ] 處理10k數據點 < 100ms
-- [ ] 異常數據處理正確
+- [ ] 密碼安全加密儲存
+- [ ] 令牌驗證 < 10ms
+- [ ] 異常登入處理正確
 
-### Task 2.2: 信號生成邏輯
-**負責Agent**: strategy-analyst + test-engineer
+### Task 2.2: 業務規則引擎
+**負責Agent**: business-analyst + test-engineer
 **優先級**: High
 **預估時間**: 2.5小時
 **依賴**: Task 2.1
 
-**描述**: 實現交易信號生成 (TDD)
-- [ ] 編寫信號生成測試場景
-- [ ] 實現超買超賣邏輯
-- [ ] 添加信心度計算
-- [ ] 集成風控檢查
+**描述**: 實現業務規則處理 (TDD)
+- [ ] 編寫規則測試場景
+- [ ] 實現權限驗證邏輯
+- [ ] 添加審批流程
+- [ ] 集成通知系統
 
 **驗收標準**:
 - [ ] 所有BDD場景通過
-- [ ] 信號準確率 > 85%
-- [ ] 風控規則生效
+- [ ] 規則執行準確率 100%
+- [ ] 權限控制生效
 
-## 階段3：風險管理 (Risk Management)
+## 階段3：安全管理 (Security Management)
 
-### Task 3.1: 倉位計算邏輯
-**負責Agent**: risk-manager + test-engineer
+### Task 3.1: 訪問控制邏輯
+**負責Agent**: architect + test-engineer
 **優先級**: High
 **預估時間**: 2小時
 **依賴**: Task 2.2
 
-**描述**: 實現倉位管理 (TDD)
-- [ ] 編寫倉位計算測試
-- [ ] 實現風險倉位算法
-- [ ] 添加最大虧損控制
-- [ ] 相關性檢查
+**描述**: 實現訪問控制 (TDD)
+- [ ] 編寫權限測試
+- [ ] 實現RBAC算法
+- [ ] 添加資源保護
+- [ ] 審計日誌記錄
 
 **驗收標準**:
-- [ ] 單筆風險 < 2%
-- [ ] 組合風險 < 15%
-- [ ] 相關性限制生效
+- [ ] 權限驗證 100%
+- [ ] 越權訪問被阻止
+- [ ] 審計追蹤完整
 
-### Task 3.2: 風控驗證服務
-**負責Agent**: risk-manager + test-engineer
+### Task 3.2: 安全驗證服務
+**負責Agent**: architect + test-engineer
 **優先級**: High
 **預估時間**: 2小時
 **依賴**: Task 3.1
 
-**描述**: 實現風控檢查服務
-- [ ] 編寫風控驗證測試
-- [ ] 實現止損檢查
-- [ ] 添加流動性驗證
+**描述**: 實現安全檢查服務
+- [ ] 編寫安全驗證測試
+- [ ] 實現輸入驗證
+- [ ] 添加XSS/SQL注入防護
 - [ ] 異常情況處理
 
 **驗收標準**:
-- [ ] 所有風控規則生效
-- [ ] 100%必須有止損
-- [ ] 異常交易被阻止
+- [ ] 所有安全規則生效
+- [ ] 100%輸入驗證
+- [ ] 惡意請求被阻止
 
 ## 階段4：API集成 (API Integration)
 
-### Task 4.1: 策略管理API
-**負責Agent**: api-specialist + test-engineer
+### Task 4.1: 用戶管理API
+**負責Agent**: integration-specialist + test-engineer
 **優先級**: Medium
 **預估時間**: 3小時
 **依賴**: Task 3.2
 
 **描述**: 實現HTTP API接口
 - [ ] 設計RESTful API規範
-- [ ] 實現策略CRUD操作
+- [ ] 實現用戶CRUD操作
 - [ ] 添加請求驗證
 - [ ] API文檔生成
 
@@ -186,34 +193,34 @@
 - [ ] 錯誤處理完整
 - [ ] 文檔自動生成
 
-### Task 4.2: 實時數據集成
-**負責Agent**: api-specialist + data-engineer
+### Task 4.2: 系統集成服務
+**負責Agent**: integration-specialist + architect
 **優先級**: Medium
 **預估時間**: 4小時
 **依賴**: Task 4.1
 
-**描述**: 集成市場數據API
-- [ ] 實現數據提供者接口
-- [ ] 添加數據緩存機制
-- [ ] 實時數據推送
+**描述**: 集成外部系統
+- [ ] 實現服務提供者接口
+- [ ] 添加響應緩存機制
+- [ ] 事件驅動架構
 - [ ] 錯誤恢復機制
 
 **驗收標準**:
-- [ ] 數據延遲 < 100ms
+- [ ] 響應延遲 < 100ms
 - [ ] 99.9%可用性
 - [ ] 自動故障恢復
 
 ## 階段5：整合測試 (Integration Testing)
 
 ### Task 5.1: 端到端測試
-**負責Agent**: test-engineer + strategy-analyst
+**負責Agent**: test-engineer + business-analyst
 **優先級**: Medium
 **預估時間**: 3小時
 **依賴**: Task 4.2
 
 **描述**: 完整流程測試
 - [ ] 編寫E2E測試場景
-- [ ] 模擬真實市場環境
+- [ ] 模擬真實業務環境
 - [ ] 性能基準測試
 - [ ] 壓力測試
 
@@ -223,7 +230,7 @@
 - [ ] 無內存洩漏
 
 ### Task 5.2: 生產部署準備
-**負責Agent**: api-specialist + risk-manager
+**負責Agent**: integration-specialist + tech-lead
 **優先級**: Low
 **預估時間**: 2小時
 **依賴**: Task 5.1
@@ -242,25 +249,22 @@
 ## 任務分配總結
 
 ### Sub Agent工作分配
-- **strategy-analyst**: 4個任務，專注策略邏輯
-- **risk-manager**: 3個任務，專注風險控制
-- **data-engineer**: 3個任務，專注數據處理
-- **api-specialist**: 3個任務，專注API集成
+- **business-analyst**: 4個任務，專注業務邏輯
+- **architect**: 5個任務，專注系統架構和安全設計
+- **data-specialist**: 2個任務，專注數據層優化
+- **integration-specialist**: 4個任務，專注系統集成
 - **test-engineer**: 7個任務，確保品質保證
 - **tech-lead**: 協調技術決策，代碼審核
-- **context-manager**: 管理策略文檔和知識庫
-- **data-scientist**: 機器學習模型開發
-- **hft-researcher**: 高頻交易優化
-- **quant-analyst**: 量化策略研究
+- **context-manager**: 管理文檔和知識庫
 
 ### 關鍵里程碑
 1. **Day 1**: 基礎設施完成
 2. **Day 2**: 核心邏輯實現
-3. **Day 3**: 風控集成完成
+3. **Day 3**: 安全集成完成
 4. **Day 4**: API集成就緒
 5. **Day 5**: 測試和部署
 
-### 風險緩解
+### 品質保證
 - 每個階段都有測試保護
 - 關鍵任務有備用方案
 - 定期進度檢查點
@@ -271,7 +275,7 @@
 
 ### High (高優先級)
 - 核心業務邏輯
-- 風險控制機制
+- 安全控制機制
 - 性能關鍵路徑
 
 ### Medium (中優先級)
@@ -287,10 +291,10 @@
 ## 示例
 
 ```bash
-> /spec-tasks rsi-strategy
+> /spec-tasks user-authentication
 ```
 
-會基於RSI策略的設計文檔，生成12個具體任務，分配給5個Sub Agents，預估5天完成。
+會基於用戶認證的設計文檔，生成12個具體任務，分配給5個Sub Agents，預估5天完成。
 
 ## 質量檢查
 
@@ -299,7 +303,7 @@
 - [ ] TDD覆蓋關鍵邏輯
 - [ ] 依賴關係合理
 - [ ] Sub Agent分工均衡
-- [ ] 風險任務有緩解措施
+- [ ] 重要任務有保障措施
 
 ## 人工審核點
 
@@ -308,7 +312,6 @@
 2. 時間估算現實
 3. 依賴關係正確
 4. 資源分配適當
-5. 風險控制充分
 
 ## 下一步
 
@@ -316,4 +319,3 @@
 - 使用 `/spec-implement [功能名稱]` 進入實施階段
 - 使用 `/spec-implement [功能名稱] [task-id]` 直接開始特定任務
 - 使用 `/spec-status [功能名稱]` 查看當前狀態
-- 使用 `/spec-risk [功能名稱]` 查看風險評估

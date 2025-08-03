@@ -93,7 +93,64 @@ Each template follows a Spec-Driven Development (SDD) approach enhanced with Con
 - `.kiro/`: Project knowledge base
   - `steering/`: Core project knowledge (product, tech, methodology, context engineering principles)
   - `specs/`: Feature specifications with SDD workflow and implementation blueprints
+  - `logs/`: Task execution logs and weekly archives
 - `docs/`: Documentation and quick references
   - `examples/`: Code patterns and implementation examples for context
 - `scripts/monitoring/`: Audit and monitoring tools
 - `INITIAL.md`: Feature specification template following context engineering format
+
+## Task Logging Requirements
+
+### Mandatory Task Documentation
+
+Claude MUST update the task log after completing any of the following:
+- **Code changes**: Creating, modifying, or deleting code files
+- **Feature implementation**: Completing a feature or sub-feature
+- **Bug fixes**: Resolving any bugs or issues
+- **Architecture decisions**: Making design or architecture changes
+- **Documentation updates**: Creating or updating significant documentation
+- **Configuration changes**: Modifying project configuration files
+
+### Task Log Update Process
+
+1. **After completing a task**, run:
+   ```bash
+   python .claude/scripts/update_task_log.py
+   ```
+   Or for quick logging:
+   ```bash
+   python .claude/scripts/update_task_log.py "Task description" "file1.py,file2.md" "Summary point 1;Summary point 2" "Task type"
+   ```
+
+2. **Required information**:
+   - Task description (concise, 5-10 words)
+   - Task type: Feature Development/Bug Fix/Refactoring/Documentation Update/Testing/Other
+   - Affected files (main files modified or created)
+   - Summary points (3-5 key changes)
+   - Related tags (optional, e.g., #feature-name)
+
+3. **Automatic archiving**: Logs are automatically archived every Sunday to `.kiro/logs/archive/`
+
+### Example Task Log Entry
+
+```markdown
+### 2024-01-20 15:45
+**Task**: Implement user authentication system
+**Type**: Feature Development
+**Affected files**: 
+- `src/auth/login.py`
+- `src/auth/middleware.py`
+- `tests/test_auth.py`
+**Summary**: 
+- Added JWT-based authentication
+- Created login/logout endpoints
+- Implemented auth middleware
+- Added comprehensive tests
+**Related tags**: #auth #security
+```
+
+### When NOT to log
+- Simple file reads or searches
+- Minor typo fixes (unless in critical code)
+- Temporary debugging changes
+- Exploratory analysis without changes

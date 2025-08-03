@@ -25,16 +25,76 @@
 ## 項目概述
 這是一個集成了多實例協作、規格驅動開發(SDD)、和專業Sub Agents的通用AI協作開發模板。
 
-## AI Assistant Guidelines
+## AI 助手指導原則
 
-### Task Delegation Principle
-- **Complex or specialized tasks**: Always delegate to appropriate Sub Agents
-- **Simple queries**: Can be handled directly for efficiency
-- **When in doubt**: Prefer delegation to ensure quality
+### 任務委派基本原則
+- **複雜或專業任務**：必須委派給適當的 Sub Agents
+- **簡單查詢**：可直接處理以提高效率
+- **有疑慮時**：優先選擇委派以確保品質
 
-### General Purpose Agent
-For queries that don't fit specialized agents, use:
-- `general-assistant`: General Q&A, simple tasks, cross-domain coordination
+### 通用助手
+對於不符合特定專業代理的查詢，使用：
+- `general-assistant`：一般問答、簡單任務、跨領域協調
+
+### 🚨 強制委派規則（必須遵守）
+
+以下情況**必須**委派給指定的 Sub Agent，**禁止**直接實作：
+
+#### 1. 架構與設計相關
+- **修改領域模型（Entity, Value Object, Aggregate）** → `architect`
+- **修改系統架構或模組結構** → `architect`  
+- **設計新的設計模式或架構模式** → `architect`
+- **技術選型或框架選擇** → `architect`
+
+#### 2. 業務邏輯與需求
+- **需求不明確或需要澄清** → `business-analyst`
+- **需要生成 BDD 場景** → `business-analyst`
+- **用戶故事或功能規劃** → `business-analyst`
+- **業務規則變更** → `business-analyst`
+
+#### 3. 數據與算法
+- **修改計算邏輯（如評分、排名）** → `data-specialist`
+- **實作新演算法** → `data-specialist`
+- **性能優化相關** → `data-specialist`
+- **數據結構設計或修改** → `data-specialist`
+
+#### 4. 測試與驗證
+- **修改驗證規則** → `test-engineer`
+- **設計測試策略** → `test-engineer`
+- **實作測試案例** → `test-engineer`
+- **程式碼品質檢查** → `test-engineer`
+
+#### 5. 技術決策
+- **重大技術決策** → `tech-lead`
+- **程式碼審查需求** → `tech-lead`
+- **技術債務評估** → `tech-lead`
+- **最佳實踐制定** → `tech-lead`
+
+### ⚡ 快速實作陷阱警告
+
+**常見錯誤模式**：
+1. ❌ 看到需求就立即開始寫程式碼
+2. ❌ 認為「這很簡單，我直接做就好」
+3. ❌ 想要展示快速解決問題的能力
+
+**正確做法**：
+1. ✅ 先評估任務類型和複雜度
+2. ✅ 符合強制委派規則的立即委派
+3. ✅ 等待 Sub Agent 分析後再實作
+4. ✅ 基於專業分析結果進行開發
+
+### 📋 委派決策檢查清單
+
+在開始任何任務前，問自己：
+1. 這個任務是否涉及上述強制委派類別？
+2. 這個任務是否需要專業領域知識？
+3. 這個任務是否會影響系統核心功能？
+4. 我是否完全理解所有需求和影響？
+
+如果任何一個答案是「是」或「不確定」→ **立即委派**
+
+### 📋 快速參考
+遇到委派決策困難時，請查閱 `.claude/AGENT_DELEGATION_CHECKLIST.md` 獲得具體指導。
 
 ## 開發方法論整合
 
@@ -286,3 +346,59 @@ feature-name/
 2. API調用批次處理
 3. 緩存常用計算結果
 4. 定期清理臨時文件
+
+## 任務記錄要求
+
+### 強制任務文檔記錄
+
+Claude 必須在完成以下任何任務後更新任務日誌：
+- **程式碼變更**：創建、修改或刪除程式碼檔案
+- **功能實作**：完成功能或子功能
+- **Bug 修復**：解決任何錯誤或問題
+- **架構決策**：進行設計或架構變更
+- **文檔更新**：創建或更新重要文檔
+- **配置變更**：修改專案配置檔案
+
+### 任務日誌更新流程
+
+1. **完成任務後**，執行：
+   ```bash
+   python .claude/scripts/update_task_log.py
+   ```
+   或使用快速記錄：
+   ```bash
+   python .claude/scripts/update_task_log.py "任務描述" "file1.py,file2.md" "摘要點1;摘要點2" "任務類型"
+   ```
+
+2. **必要資訊**：
+   - 任務描述（簡潔，5-10 個字）
+   - 任務類型：功能開發/Bug修復/重構/文檔更新/測試/其他
+   - 影響檔案（修改或創建的主要檔案）
+   - 摘要要點（3-5 個關鍵變更）
+   - 相關標籤（可選，如 #功能名稱）
+
+3. **自動歸檔**：日誌每週日自動歸檔到 `.kiro/logs/archive/`
+
+### 任務日誌記錄範例
+
+```markdown
+### 2024-01-20 15:45
+**任務**: 實作使用者認證系統
+**類型**: 功能開發
+**影響檔案**: 
+- `src/auth/login.py`
+- `src/auth/middleware.py`
+- `tests/test_auth.py`
+**變更摘要**: 
+- 添加基於 JWT 的認證
+- 創建登入/登出端點
+- 實作認證中介軟體
+- 添加完整測試
+**相關議題**: #auth #security
+```
+
+### 不需記錄的情況
+- 簡單的檔案讀取或搜尋
+- 小型錯字修正（除非在關鍵程式碼中）
+- 臨時除錯變更
+- 不涉及變更的探索性分析

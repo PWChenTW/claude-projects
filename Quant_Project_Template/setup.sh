@@ -1,9 +1,9 @@
 #!/bin/bash
 
-# 通用AI協作開發模板 - 一鍵設置腳本
+# 量化交易AI協作開發模板 - 一鍵設置腳本
 # 設置完整的AI協作開發環境
 
-echo "🚀 通用AI協作開發模板一鍵設置"
+echo "🚀 量化交易AI協作開發模板一鍵設置"
 echo "==============================="
 echo "這將設置完整的AI協作開發環境，包括："
 echo "• 規格驅動開發 (SDD) 框架"
@@ -21,6 +21,41 @@ if ! command -v python3 &> /dev/null; then
 fi
 
 echo "✅ Python3環境檢查通過"
+
+# 選擇框架版本
+echo ""
+echo "🔧 選擇框架版本"
+echo "==============="
+echo "1) 優化版框架 (推薦) - 靈活高效，適合快速策略開發"
+echo "2) 原版框架 - 結構化流程，適合機構級交易系統"
+echo ""
+read -p "請選擇 (1 或 2，默認為 1): " framework_choice
+
+# 設置默認值
+if [ -z "$framework_choice" ]; then
+    framework_choice="1"
+fi
+
+# 應用框架選擇
+if [ "$framework_choice" = "1" ]; then
+    echo "✅ 使用優化版框架"
+    if [ -f "CLAUDE_OPTIMIZED.md" ]; then
+        cp CLAUDE_OPTIMIZED.md CLAUDE.md
+        echo "   已配置優化版 CLAUDE.md"
+    fi
+    FRAMEWORK_TYPE="optimized"
+elif [ "$framework_choice" = "2" ]; then
+    echo "✅ 使用原版框架"
+    FRAMEWORK_TYPE="original"
+else
+    echo "⚠️  無效選擇，使用默認優化版框架"
+    if [ -f "CLAUDE_OPTIMIZED.md" ]; then
+        cp CLAUDE_OPTIMIZED.md CLAUDE.md
+    fi
+    FRAMEWORK_TYPE="optimized"
+fi
+
+echo ""
 
 # 創建基本目錄結構
 echo "📁 創建目錄結構..."
@@ -321,19 +356,50 @@ fi
 echo ""
 echo "🎉 設置完成！"
 echo ""
-echo "📋 下一步操作："
-echo "1. 運行 'claude-code' 啟動開發環境"
-echo "2. 使用 '/spec-init [功能名稱] [描述]' 創建第一個功能"
-echo "3. 使用 '/spec-generate-prp [功能名稱]' 生成實作藍圖"
-echo "4. 使用 '/spec-ultrathink [功能名稱]' 進行深度分析"
-echo "5. 查看 USAGE_GUIDE.md 了解詳細使用方法"
+
+# 根據框架類型顯示不同的指導
+if [ "$FRAMEWORK_TYPE" = "optimized" ]; then
+    echo "📋 下一步操作（優化版框架）："
+    echo "1. 運行 'claude-code' 啟動開發環境"
+    echo "2. 使用 '/spec-init-simple [策略名稱] [描述]' 快速創建策略（推薦）"
+    echo "3. 複雜策略可使用 '/spec-init [策略名稱] [描述]' 完整流程"
+    echo "4. 查看 README.md 了解量化交易開發指南"
+    echo ""
+    echo "💡 優化版特色："
+    echo "• 快速策略原型開發"
+    echo "• 智能判斷策略複雜度"
+    echo "• 簡單策略直接實現"
+    echo "• 複雜策略自動建議風控評估"
+else
+    echo "📋 下一步操作（原版框架）："
+    echo "1. 運行 'claude-code' 啟動開發環境"
+    echo "2. 使用 '/spec-init [策略名稱] [描述]' 創建第一個策略"
+    echo "3. 使用 '/spec-generate-prp [策略名稱]' 生成實作藍圖"
+    echo "4. 使用 '/spec-ultrathink [策略名稱]' 進行深度分析"
+    echo "5. 查看 USAGE_GUIDE.md 了解詳細使用方法"
+    echo ""
+    echo "📌 原版特色："
+    echo "• 完整的風控評估流程"
+    echo "• 強制性的策略回測"
+    echo "• 詳細的策略文檔"
+    echo "• 適合機構級交易系統"
+fi
+
 echo ""
-echo "🔧 有用的命令："
+echo "🔧 通用命令："
 echo "• ./test_setup.sh - 檢查環境狀態"
-echo "• python .claude/scheduler/spec_scheduler.py report - 查看項目進度"
-echo "• python .claude/scheduler/context_validator.py - 驗證上下文完整性"
+echo "• python .claude/scheduler/spec_scheduler.py report - 查看策略進度"
 echo "• python .claude/scripts/update_task_log.py - 記錄任務執行"
 echo "• python scripts/monitoring/view_command_audit.py - 查看命令統計"
+
+# 框架切換提示
+echo ""
+echo "💡 提示：如需切換框架版本，可手動操作："
+if [ "$FRAMEWORK_TYPE" = "optimized" ]; then
+    echo "   切換到原版：保留當前 CLAUDE.md"
+else
+    echo "   切換到優化版：cp CLAUDE_OPTIMIZED.md CLAUDE.md"
+fi
 echo ""
 
 exit 0

@@ -8,6 +8,18 @@ This is a template repository containing two AI-assisted development templates:
 1. **General_Project_Template/** - General-purpose AI collaboration template for web apps, tools, games, etc.
 2. **Quant_Project_Template/** - Specialized template for quantitative trading and financial analysis
 
+## Framework Versions
+
+Each template now includes two framework versions:
+- **CLAUDE.md** - Original structured framework with strict delegation rules
+- **CLAUDE_OPTIMIZED.md** - Optimized flexible framework balancing structure and freedom
+
+Choose based on your project needs:
+- Use optimized version for most projects (recommended)
+- Use original version for large teams or compliance-heavy projects
+
+See `docs/framework_comparison.md` for detailed comparison
+
 ## Commands
 
 ### Template Setup
@@ -34,8 +46,9 @@ cd ~/my-trading-strategy
 # Start AI collaboration
 claude-code
 
-# Initialize a new feature with Spec-Driven Development (SDD)
-/spec-init [feature-name] [description]
+# Initialize a new feature (two options)
+/spec-init-simple [feature-name] [description]  # Simplified flow (recommended)
+/spec-init [feature-name] [description]         # Full SDD flow
 
 # Context Engineering Commands
 /spec-generate-prp [feature-name]  # Generate implementation blueprint
@@ -45,7 +58,8 @@ claude-code
 python .claude/scheduler/context_validator.py [feature-name]
 
 # Check project progress
-python .claude/scheduler/spec_scheduler.py report
+python .claude/scheduler/spec_scheduler.py report         # Detailed report
+python .claude/scheduler/spec_scheduler_simple.py report  # Quick overview
 
 # View command statistics
 python scripts/monitoring/view_command_audit.py

@@ -22,6 +22,48 @@ fi
 
 echo "✅ Python3環境檢查通過"
 
+# 選擇框架版本
+echo ""
+echo "🔧 選擇框架版本"
+echo "==============="
+echo "1) 優化版框架 (推薦) - 靈活高效，適合大多數項目"
+echo "2) 原版框架 - 結構化流程，適合大型團隊或合規項目"
+echo ""
+read -p "請選擇 (1 或 2，默認為 1): " framework_choice
+
+# 設置默認值
+if [ -z "$framework_choice" ]; then
+    framework_choice="1"
+fi
+
+# 應用框架選擇
+if [ "$framework_choice" = "1" ]; then
+    echo "✅ 使用優化版框架"
+    if [ -f "CLAUDE_OPTIMIZED.md" ]; then
+        cp CLAUDE_OPTIMIZED.md CLAUDE.md
+        echo "   已配置優化版 CLAUDE.md"
+    fi
+    if [ -f "README_OPTIMIZED.md" ]; then
+        cp README_OPTIMIZED.md README.md
+        echo "   已配置優化版 README.md"
+    fi
+    FRAMEWORK_TYPE="optimized"
+elif [ "$framework_choice" = "2" ]; then
+    echo "✅ 使用原版框架"
+    FRAMEWORK_TYPE="original"
+else
+    echo "⚠️  無效選擇，使用默認優化版框架"
+    if [ -f "CLAUDE_OPTIMIZED.md" ]; then
+        cp CLAUDE_OPTIMIZED.md CLAUDE.md
+    fi
+    if [ -f "README_OPTIMIZED.md" ]; then
+        cp README_OPTIMIZED.md README.md
+    fi
+    FRAMEWORK_TYPE="optimized"
+fi
+
+echo ""
+
 # 創建基本目錄結構
 echo "📁 創建目錄結構..."
 mkdir -p .claude/agents
@@ -321,19 +363,50 @@ fi
 echo ""
 echo "🎉 設置完成！"
 echo ""
-echo "📋 下一步操作："
-echo "1. 運行 'claude-code' 啟動開發環境"
-echo "2. 使用 '/spec-init [功能名稱] [描述]' 創建第一個功能"
-echo "3. 使用 '/spec-generate-prp [功能名稱]' 生成實作藍圖"
-echo "4. 使用 '/spec-ultrathink [功能名稱]' 進行深度分析"
-echo "5. 查看 USAGE_GUIDE.md 了解詳細使用方法"
+
+# 根據框架類型顯示不同的指導
+if [ "$FRAMEWORK_TYPE" = "optimized" ]; then
+    echo "📋 下一步操作（優化版框架）："
+    echo "1. 運行 'claude-code' 啟動開發環境"
+    echo "2. 使用 '/spec-init-simple [功能名稱] [描述]' 快速創建功能（推薦）"
+    echo "3. 複雜功能可使用 '/spec-init [功能名稱] [描述]' 完整流程"
+    echo "4. 查看 README.md 了解優化版使用指南"
+    echo ""
+    echo "💡 優化版特色："
+    echo "• 智能判斷任務複雜度"
+    echo "• 簡單任務直接實現"
+    echo "• 複雜任務自動建議諮詢專家"
+    echo "• 更少的流程開銷，更高的效率"
+else
+    echo "📋 下一步操作（原版框架）："
+    echo "1. 運行 'claude-code' 啟動開發環境"
+    echo "2. 使用 '/spec-init [功能名稱] [描述]' 創建第一個功能"
+    echo "3. 使用 '/spec-generate-prp [功能名稱]' 生成實作藍圖"
+    echo "4. 使用 '/spec-ultrathink [功能名稱]' 進行深度分析"
+    echo "5. 查看 USAGE_GUIDE.md 了解詳細使用方法"
+    echo ""
+    echo "📌 原版特色："
+    echo "• 結構化的開發流程"
+    echo "• 強制性的多階段委派"
+    echo "• 完整的文檔要求"
+    echo "• 適合大型團隊協作"
+fi
+
 echo ""
-echo "🔧 有用的命令："
+echo "🔧 通用命令："
 echo "• ./test_setup.sh - 檢查環境狀態"
 echo "• python .claude/scheduler/spec_scheduler.py report - 查看項目進度"
-echo "• python .claude/scheduler/context_validator.py - 驗證上下文完整性"
 echo "• python .claude/scripts/update_task_log.py - 記錄任務執行"
 echo "• python scripts/monitoring/view_command_audit.py - 查看命令統計"
+
+# 框架切換提示
+echo ""
+echo "💡 提示：如需切換框架版本，可手動操作："
+if [ "$FRAMEWORK_TYPE" = "optimized" ]; then
+    echo "   切換到原版：保留當前 CLAUDE.md 和 README.md"
+else
+    echo "   切換到優化版：cp CLAUDE_OPTIMIZED.md CLAUDE.md"
+fi
 echo ""
 
 exit 0

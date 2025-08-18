@@ -77,26 +77,23 @@ Each template follows a Spec-Driven Development (SDD) approach enhanced with Con
 
 ### Sub Agents by Template
 
-**General Template Sub Agents:**
-- `business-analyst`: Requirements analysis, BDD scenarios, UX design
-- `architect`: System architecture, DDD modeling, tech selection
-- `data-specialist`: Data structures, algorithms, performance optimization
-- `integration-specialist`: API design, external services, system integration
-- `test-engineer`: Test strategy, automation, code quality
-- `tech-lead`: Technical leadership, code review, team coordination
-- `context-manager`: Knowledge management, documentation, project memory
+**General Template Sub Agents (Researcher Mode):**
+- `business-analyst-researcher`: Requirements research, BDD scenarios planning, UX analysis
+- `architect-researcher`: System architecture research, DDD modeling, tech evaluation
+- `data-specialist-researcher`: Data structure analysis, algorithm research, performance planning
+- `integration-specialist-researcher`: API design research, service integration analysis
+- `quality-researcher`: Quality assurance research, test strategy, best practices (merged test-engineer + tech-lead)
+- `context-manager-researcher`: Knowledge management research, documentation planning
 
-**Quant Template Sub Agents:**
-- `strategy-analyst`: Strategy requirements, BDD scenarios, risk assessment
-- `risk-manager`: Risk rules, position sizing, capital management
-- `data-engineer`: Data acquisition, technical indicators, feature engineering
-- `api-specialist`: API integration, performance, error handling
-- `test-engineer`: Test strategy, automation, code quality
-- `tech-lead`: Trading system leadership, performance optimization
-- `context-manager`: Strategy knowledge, market intelligence, research docs
-- `data-scientist`: Machine learning, statistical modeling, predictions
-- `hft-researcher`: Market microstructure, latency optimization, order execution
-- `quant-analyst`: Financial modeling, derivatives pricing, portfolio optimization
+**Quant Template Sub Agents (Researcher Mode):**
+- `quant-analyst-researcher`: Quantitative analysis, financial modeling, portfolio theory research
+- `hft-researcher`: Market microstructure research, latency optimization analysis, order execution strategies
+- `data-engineer-researcher`: Data pipeline research, technical indicators analysis, feature engineering planning
+- `data-scientist-researcher`: ML model research, statistical analysis, prediction methodology
+- `api-specialist-researcher`: API integration research, performance analysis, error handling strategies
+- `system-architect-researcher`: Trading system architecture, technical design research (merged architect-analyst + developer-specialist)
+- `quality-researcher`: Quality assurance research, test strategy, best practices (merged quality-engineer + test-engineer + tech-lead)
+- `context-manager-researcher`: Strategy knowledge research, market intelligence analysis
 
 ### Key Directories
 - `.claude/`: AI collaboration configuration
@@ -176,6 +173,8 @@ When working on template improvements or framework enhancements, use the followi
 
 ```
 .kiro/
+├── context/
+│   └── current.md        # Active working context (MUST update frequently)
 ├── memory/
 │   ├── global/           # Cross-project persistent knowledge
 │   ├── project/          # Current project memory
@@ -190,6 +189,22 @@ When working on template improvements or framework enhancements, use the followi
     ├── tasks.log         # Task execution log
     └── archive/          # Archived weekly logs
 ```
+
+### 🔴 Context vs Memory 重要區別
+
+**Context (`.kiro/context/current.md`)** - 活躍工作記憶：
+- **必須更新時機**：
+  - ✅ 每次新會話開始時先讀取
+  - ✅ 完成重大功能或改變後更新
+  - ✅ 切換工作焦點時更新
+  - ✅ 發現重要限制或問題時記錄
+- **內容特點**：簡潔（2-3頁）、即時、高度相關
+- **包含**：當前狀態、最近改變、活躍項目、快速參考
+
+**Memory (`.kiro/memory/`)** - 持久化知識庫：
+- **更新時機**：完成任務、做出決策、階段總結
+- **內容特點**：詳細、完整、可追溯
+- **包含**：完整進度、決策理由、歷史記錄
 
 ### Progress Tracking Rules
 

@@ -168,3 +168,60 @@ Claude MUST update the task log after completing any of the following:
 - Minor typo fixes (unless in critical code)
 - Temporary debugging changes
 - Exploratory analysis without changes
+
+## Project Memory and Progress Tracking
+
+### Memory System Structure
+When working on template improvements or framework enhancements, use the following structure:
+
+```
+.kiro/
+├── memory/
+│   ├── global/           # Cross-project persistent knowledge
+│   ├── project/          # Current project memory
+│   │   ├── enhancement-progress.md  # Main progress tracking document
+│   │   └── decisions.md             # Important decisions record
+│   └── session/          # Current session temporary memory
+├── research/
+│   └── [YYYY-MM-DD]/    # Daily research documents
+│       ├── *.md          # Research reports and analysis
+│       └── decisions/    # Daily decision records
+└── logs/
+    ├── tasks.log         # Task execution log
+    └── archive/          # Archived weekly logs
+```
+
+### Progress Tracking Rules
+
+#### Must Update Progress When:
+1. **Completing sub-agent transformations**: Update `.kiro/memory/project/enhancement-progress.md`
+2. **Making important decisions**: Record in `.kiro/memory/project/decisions.md`
+3. **Completing research analysis**: Save to `.kiro/research/[current date]/`
+4. **Architecture or process changes**: Update relevant memory documents
+
+#### Update Methods:
+- **Progress documents**: Use Edit/MultiEdit tools to update markdown files
+- **Todo items**: Use TodoWrite tool to manage current tasks
+- **Research documents**: Use Write tool to create new research reports
+
+### Todo Management with TodoWrite
+
+```python
+# Task states: pending, in_progress, completed
+# Only one task can be in_progress at a time
+# Mark tasks as completed immediately after finishing
+```
+
+### Knowledge Update Workflow
+
+1. **Research Phase**: Save all research outputs to `.kiro/research/[date]/`
+2. **Decision Phase**: Update important decisions to `.kiro/memory/project/decisions.md`
+3. **Implementation Phase**: Update progress to `.kiro/memory/project/enhancement-progress.md`
+4. **Summary Phase**: Create summary documents in research directory
+
+### Query Order Suggestion
+When needing to understand project status:
+1. Check `.kiro/memory/project/enhancement-progress.md` for overall progress
+2. Check `.kiro/research/[recent date]/` for latest research
+3. Use TodoWrite tool to view current tasks
+4. Check `.kiro/memory/project/decisions.md` for key decisions

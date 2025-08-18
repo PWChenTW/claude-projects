@@ -1,66 +1,99 @@
-# Feature Specification Template - Quantitative Trading
+# Feature Specification Template (EPE + SDD Enhanced)
+
+## 📚 EXPLORATION PHASE
+[This section will be auto-filled by /explore command]
+
+### Context Understanding
+- Existing codebase patterns:
+- Related modules and dependencies:
+- Technical constraints discovered:
+- Potential challenges identified:
+
+## 📋 PLANNING PHASE
+[This section will be auto-filled by /plan command]
+
+### Implementation Strategy
+- Technical approach:
+- Task breakdown with estimates:
+- Risk mitigation plan:
+- Success criteria:
 
 ## FEATURE
-[Describe the specific trading feature, strategy component, or analysis requirement in detail. Include mathematical formulas, risk parameters, and performance objectives.]
+[Describe the specific feature or requirement in detail. Be extremely specific about what needs to be built, including user flows, expected behaviors, and acceptance criteria.]
 
 ### Example:
 ```
-Implement a mean reversion strategy that:
-- Identifies overbought/oversold conditions using Bollinger Bands (2 std dev)
-- Enters long positions when price < lower band and RSI < 30
-- Enters short positions when price > upper band and RSI > 70
-- Uses dynamic position sizing based on Kelly Criterion
-- Implements stop-loss at 2% and take-profit at 5%
-- Trades liquid stocks with >$1M daily volume
+Build a user authentication system that supports:
+- Email/password login with secure password hashing
+- OAuth integration (Google, GitHub)
+- Session management with JWT tokens
+- Password reset flow via email
+- Rate limiting for login attempts
 ```
 
 ## EXAMPLES
-[Reference existing strategy patterns, indicator implementations, or similar trading systems in the codebase.]
+[Reference existing code patterns, similar implementations, or examples in the examples/ folder. Include code snippets that demonstrate the desired patterns.]
 
 ### Example:
-```python
-# Reference existing indicator calculation from indicators/technical.py
-def calculate_bollinger_bands(prices, window=20, num_std=2):
-    rolling_mean = prices.rolling(window).mean()
-    rolling_std = prices.rolling(window).std()
-    upper_band = rolling_mean + (rolling_std * num_std)
-    lower_band = rolling_mean - (rolling_std * num_std)
-    return upper_band, rolling_mean, lower_band
+```javascript
+// Reference existing auth middleware pattern from middleware/auth.js
+export const requireAuth = async (req, res, next) => {
+  const token = req.headers.authorization?.split(' ')[1];
+  // ... validation logic
+};
 
-# Similar strategy pattern in strategies/momentum.py
-class MomentumStrategy(BaseStrategy):
-    def generate_signals(self, data):
-        # Signal generation logic
-        pass
+// Similar implementation in projects/user-service/auth.js
 ```
 
 ## DOCUMENTATION
-[List relevant financial libraries, API documentation, academic papers, and market data sources.]
+[List relevant documentation, API references, library docs, and external resources. Include specific sections or methods that are particularly relevant.]
 
 ### Example:
 ```
-- TA-Lib documentation: https://mrjbq7.github.io/ta-lib/
-- Backtrader framework: https://www.backtrader.com/docu/
-- Interactive Brokers API: https://interactivebrokers.github.io/tws-api/
-- Kelly Criterion paper: "A New Interpretation of Information Rate" (1956)
-- Bollinger Bands: https://www.bollingerbands.com/bollinger-bands
-- Risk management: "The Mathematics of Money Management" by Ralph Vince
-- Market microstructure: "Trading and Exchanges" by Larry Harris
+- bcrypt documentation: https://www.npmjs.com/package/bcrypt#usage
+- JWT best practices: https://tools.ietf.org/html/rfc7519#section-4.1
+- Express session middleware: https://expressjs.com/en/resources/middleware/session.html
+- OAuth 2.0 flow: https://oauth.net/2/grant-types/authorization-code/
 ```
 
 ## OTHER CONSIDERATIONS
-[Market-specific constraints, regulatory requirements, execution considerations, and risk management rules.]
+[Project-specific constraints, gotchas, performance requirements, security considerations, and potential edge cases.]
 
 ### Example:
 ```
-- Market hours: Strategy only trades during regular market hours (9:30 AM - 4:00 PM ET)
-- Minimum capital: $25,000 (PDT rule compliance)
-- Position limits: Max 5% of portfolio per position, max 20% sector exposure
-- Slippage model: 0.1% for liquid stocks, 0.3% for small-caps
-- Commission structure: $0.005 per share, min $1 per trade
-- Data requirements: 1-minute bars for intraday, daily bars for signals
-- Backtesting period: Minimum 5 years including 2008 crisis and COVID-19
-- Risk metrics: Max drawdown < 15%, Sharpe ratio > 1.5
-- Regulatory: Must comply with Reg T margin requirements
-- Execution: Use VWAP orders for positions > $100k
+- Password requirements: min 8 chars, must include uppercase, lowercase, number
+- Session timeout: 24 hours for regular users, 1 hour for admin users
+- Rate limiting: Max 5 login attempts per 15 minutes per IP
+- GDPR compliance: Users must be able to delete their account and all associated data
+- Database: Using PostgreSQL with Prisma ORM
+- Security: All passwords must be hashed with bcrypt (min 10 rounds)
+- Performance: Auth checks should complete within 100ms
 ```
+
+## ✅ VERIFICATION CRITERIA
+[This section will be auto-filled by /verify command]
+
+### Testing Requirements
+- Unit test coverage target:
+- Integration test scenarios:
+- Performance benchmarks:
+- Security validation:
+
+### Deployment Checklist
+- [ ] All tests passing
+- [ ] Documentation updated
+- [ ] Performance criteria met
+- [ ] Security review completed
+- [ ] Rollback plan prepared
+
+## 📊 WORKFLOW STATUS
+
+### EPE + SDD Phase Tracking
+```
+[✓] Exploration → [✓] Plan → [ ] Requirements → [ ] Design → [ ] Tasks → [ ] Execute → [ ] Verify
+```
+
+### Next Steps
+1. Complete exploration phase with `/explore [feature-name]`
+2. Create implementation plan with `/plan [feature-name]`
+3. Proceed with SDD workflow for detailed design

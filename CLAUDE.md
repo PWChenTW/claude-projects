@@ -20,6 +20,38 @@ Choose based on your project needs:
 
 See `docs/framework_comparison.md` for detailed comparison
 
+## ⚠️ Template Synchronization Requirements
+
+**IMPORTANT**: When making improvements to the AI collaboration framework, ensure that **BOTH** templates receive the same updates:
+
+### Templates that Must Stay Synchronized:
+1. **General_Project_Template/** - General-purpose AI collaboration
+2. **Quant_Project_Template/** - Quantitative trading specialized
+
+### Key Areas Requiring Synchronization:
+- **Sub-agent definitions** (`.claude/agents/`)
+- **Commands** (`.claude/commands/`)  
+- **INITIAL.md** template
+- **CLAUDE.md** configuration
+- **Memory management scripts**
+- **SDD workflow integration**
+
+### Why Synchronization Matters:
+- Prevents feature divergence between templates
+- Ensures consistent user experience
+- Maintains framework improvements across all project types
+- Reduces maintenance burden
+
+### How to Synchronize:
+```bash
+# Example: After updating General Template
+cp General_Project_Template/.claude/commands/*.md Quant_Project_Template/.claude/commands/
+cp General_Project_Template/INITIAL.md Quant_Project_Template/INITIAL.md
+
+# Verify both templates have same features
+diff -q General_Project_Template/.claude/commands/ Quant_Project_Template/.claude/commands/
+```
+
 ## Commands
 
 ### Template Setup

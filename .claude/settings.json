@@ -1,0 +1,48 @@
+{
+  "hooks": {
+    "post-task": "python .claude/scripts/memory_auto_update.py task",
+    "post-spec-init": "python .claude/scripts/memory_auto_update.py spec-init",
+    "pre-session-end": "python .claude/scripts/memory_auto_update.py session-end",
+    "post-commit": "python .claude/scripts/memory_auto_update.py git-commit"
+  },
+  "memory": {
+    "auto_sync": true,
+    "auto_backup": true,
+    "backup_retention": 7,
+    "research_retention_days": 30,
+    "session_cleanup_on_end": true
+  },
+  "workflow": {
+    "mode": "integrated",
+    "auto_progression": true,
+    "require_approval": true,
+    "exploration": {
+      "depth": "deep",
+      "time_limit": "30m",
+      "auto_trigger": true
+    },
+    "planning": {
+      "detail_level": "high",
+      "risk_assessment": true,
+      "task_max_hours": 2
+    },
+    "verification": {
+      "coverage_threshold": 80,
+      "performance_check": true,
+      "security_scan": true,
+      "auto_verify_on_complete": true
+    }
+  },
+  "agents": {
+    "mode": "researcher",
+    "parallel_execution": true,
+    "max_concurrent": 3,
+    "auto_delegate": true
+  },
+  "logging": {
+    "task_log": true,
+    "auto_archive": true,
+    "archive_weekly": true,
+    "log_level": "INFO"
+  }
+}

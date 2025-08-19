@@ -2,6 +2,25 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## Architecture Overview
+
+### System Design Philosophy
+This repository implements a **hierarchical, context-aware AI collaboration framework** based on:
+- **Spec-Driven Development (SDD)** for structured workflow
+- **Explore-Plan-Execute (EPE)** for thorough implementation
+- **Vibe Coding principles** for safe AI autonomy
+- **Researcher pattern** for token-efficient sub-agents
+
+### Core Components
+```
+claude-projects/
+├── General_Project_Template/    # Web apps, tools, games
+├── Quant_Project_Template/      # Trading and finance
+├── .claude/                     # Global AI configuration
+├── .kiro/                       # Knowledge and memory
+└── docs/                        # Framework documentation
+```
+
 ## Repository Overview
 
 This is a template repository containing two AI-assisted development templates:
@@ -19,6 +38,38 @@ Choose based on your project needs:
 - Use original version for large teams or compliance-heavy projects
 
 See `docs/framework_comparison.md` for detailed comparison
+
+## ⚠️ Template Synchronization Requirements
+
+**IMPORTANT**: When making improvements to the AI collaboration framework, ensure that **BOTH** templates receive the same updates:
+
+### Templates that Must Stay Synchronized:
+1. **General_Project_Template/** - General-purpose AI collaboration
+2. **Quant_Project_Template/** - Quantitative trading specialized
+
+### Key Areas Requiring Synchronization:
+- **Sub-agent definitions** (`.claude/agents/`)
+- **Commands** (`.claude/commands/`)  
+- **INITIAL.md** template
+- **CLAUDE.md** configuration
+- **Memory management scripts**
+- **SDD workflow integration**
+
+### Why Synchronization Matters:
+- Prevents feature divergence between templates
+- Ensures consistent user experience
+- Maintains framework improvements across all project types
+- Reduces maintenance burden
+
+### How to Synchronize:
+```bash
+# Example: After updating General Template
+cp General_Project_Template/.claude/commands/*.md Quant_Project_Template/.claude/commands/
+cp General_Project_Template/INITIAL.md Quant_Project_Template/INITIAL.md
+
+# Verify both templates have same features
+diff -q General_Project_Template/.claude/commands/ Quant_Project_Template/.claude/commands/
+```
 
 ## Commands
 
@@ -77,26 +128,23 @@ Each template follows a Spec-Driven Development (SDD) approach enhanced with Con
 
 ### Sub Agents by Template
 
-**General Template Sub Agents:**
-- `business-analyst`: Requirements analysis, BDD scenarios, UX design
-- `architect`: System architecture, DDD modeling, tech selection
-- `data-specialist`: Data structures, algorithms, performance optimization
-- `integration-specialist`: API design, external services, system integration
-- `test-engineer`: Test strategy, automation, code quality
-- `tech-lead`: Technical leadership, code review, team coordination
-- `context-manager`: Knowledge management, documentation, project memory
+**General Template Sub Agents (Researcher Mode):**
+- `business-analyst-researcher`: Requirements research, BDD scenarios planning, UX analysis
+- `architect-researcher`: System architecture research, DDD modeling, tech evaluation
+- `data-specialist-researcher`: Data structure analysis, algorithm research, performance planning
+- `integration-specialist-researcher`: API design research, service integration analysis
+- `quality-researcher`: Quality assurance research, test strategy, best practices (merged test-engineer + tech-lead)
+- `context-manager-researcher`: Knowledge management research, documentation planning
 
-**Quant Template Sub Agents:**
-- `strategy-analyst`: Strategy requirements, BDD scenarios, risk assessment
-- `risk-manager`: Risk rules, position sizing, capital management
-- `data-engineer`: Data acquisition, technical indicators, feature engineering
-- `api-specialist`: API integration, performance, error handling
-- `test-engineer`: Test strategy, automation, code quality
-- `tech-lead`: Trading system leadership, performance optimization
-- `context-manager`: Strategy knowledge, market intelligence, research docs
-- `data-scientist`: Machine learning, statistical modeling, predictions
-- `hft-researcher`: Market microstructure, latency optimization, order execution
-- `quant-analyst`: Financial modeling, derivatives pricing, portfolio optimization
+**Quant Template Sub Agents (Researcher Mode):**
+- `quant-analyst-researcher`: Quantitative analysis, financial modeling, portfolio theory research
+- `hft-researcher`: Market microstructure research, latency optimization analysis, order execution strategies
+- `data-engineer-researcher`: Data pipeline research, technical indicators analysis, feature engineering planning
+- `data-scientist-researcher`: ML model research, statistical analysis, prediction methodology
+- `api-specialist-researcher`: API integration research, performance analysis, error handling strategies
+- `system-architect-researcher`: Trading system architecture, technical design research (merged architect-analyst + developer-specialist)
+- `quality-researcher`: Quality assurance research, test strategy, best practices (merged quality-engineer + test-engineer + tech-lead)
+- `context-manager-researcher`: Strategy knowledge research, market intelligence analysis
 
 ### Key Directories
 - `.claude/`: AI collaboration configuration
@@ -168,3 +216,127 @@ Claude MUST update the task log after completing any of the following:
 - Minor typo fixes (unless in critical code)
 - Temporary debugging changes
 - Exploratory analysis without changes
+
+## 🏗️ System Architecture Layers (Vibe Coding)
+
+### Core vs Leaf Nodes Distinction
+
+#### 🔴 Core Architecture (Human Review Required)
+**Definition**: Foundation components where changes impact system stability
+- `/infrastructure/` - Database, auth, security infrastructure
+- `/config/production.*` - Production environment settings
+- `/core/domain/` - Business logic and domain models
+- Payment, authentication, authorization modules
+- **Review Level**: Strict (architecture + security + business)
+- **Test Coverage**: 100% required
+- **Deployment**: Requires explicit approval
+
+#### 🟢 Leaf Nodes (AI Autonomous Zone)
+**Definition**: Isolated components safe for rapid iteration
+- `/components/` - UI components and widgets
+- `/utils/` - Helper functions and utilities
+- `/tests/` - Test files and fixtures
+- `/docs/` - Documentation and examples
+- **Review Level**: Minimal (automated checks only)
+- **Test Coverage**: 60% acceptable
+- **Deployment**: Auto-deploy to staging
+
+#### 🟡 Boundary Layer (Context-Dependent)
+**Definition**: Components requiring case-by-case evaluation
+- `/api/` - API endpoints (evaluate data sensitivity)
+- `/services/` - Service layer (check dependencies)
+- **Review Level**: Variable based on impact analysis
+- **Test Coverage**: 80% recommended
+- **Deployment**: Staged rollout
+
+詳見 `docs/architecture/system-layers.md` 了解完整的層級劃分和安全準則。
+
+## Project Memory and Progress Tracking
+
+### Memory System Structure
+When working on template improvements or framework enhancements, use the following structure:
+
+```
+.kiro/
+├── context/
+│   └── current.md        # Active working context (MUST update frequently)
+├── memory/
+│   ├── global/           # Cross-project persistent knowledge
+│   ├── project/          # Current project memory
+│   │   ├── enhancement-progress.md  # Main progress tracking document
+│   │   └── decisions.md             # Important decisions record
+│   └── session/          # Current session temporary memory
+├── research/
+│   └── [YYYY-MM-DD]/    # Daily research documents
+│       ├── *.md          # Research reports and analysis
+│       └── decisions/    # Daily decision records
+└── logs/
+    ├── tasks.log         # Task execution log
+    └── archive/          # Archived weekly logs
+```
+
+### 🔴 Context vs Memory 重要區別
+
+**Context (`.kiro/context/current.md`)** - 活躍工作記憶：
+- **必須更新時機**：
+  - ✅ 每次新會話開始時先讀取
+  - ✅ 完成重大功能或改變後更新
+  - ✅ 切換工作焦點時更新
+  - ✅ 發現重要限制或問題時記錄
+- **內容特點**：簡潔（2-3頁）、即時、高度相關
+- **包含**：當前狀態、最近改變、活躍項目、快速參考
+
+**Memory (`.kiro/memory/`)** - 持久化知識庫：
+- **更新時機**：完成任務、做出決策、階段總結
+- **內容特點**：詳細、完整、可追溯
+- **包含**：完整進度、決策理由、歷史記錄
+
+### 📝 Session Memory Management
+
+**Session Memory (`.kiro/memory/session/`)** - 會話臨時記憶：
+- **Purpose**: Track progress within a single work session
+- **Auto-cleanup**: Cleared after 24 hours or session end
+- **Contents**:
+  ```
+  session/
+  ├── active_tasks.json    # Current todo items
+  ├── decisions.md         # Session decisions
+  ├── snippets.md          # Code snippets for reuse
+  └── notes.md             # Temporary notes
+  ```
+- **Usage**: Helps maintain context during long tasks without polluting permanent memory
+
+### Progress Tracking Rules
+
+#### Must Update Progress When:
+1. **Completing sub-agent transformations**: Update `.kiro/memory/project/enhancement-progress.md`
+2. **Making important decisions**: Record in `.kiro/memory/project/decisions.md`
+3. **Completing research analysis**: Save to `.kiro/research/[current date]/`
+4. **Architecture or process changes**: Update relevant memory documents
+
+#### Update Methods:
+- **Progress documents**: Use Edit/MultiEdit tools to update markdown files
+- **Todo items**: Use TodoWrite tool to manage current tasks
+- **Research documents**: Use Write tool to create new research reports
+
+### Todo Management with TodoWrite
+
+```python
+# Task states: pending, in_progress, completed
+# Only one task can be in_progress at a time
+# Mark tasks as completed immediately after finishing
+```
+
+### Knowledge Update Workflow
+
+1. **Research Phase**: Save all research outputs to `.kiro/research/[date]/`
+2. **Decision Phase**: Update important decisions to `.kiro/memory/project/decisions.md`
+3. **Implementation Phase**: Update progress to `.kiro/memory/project/enhancement-progress.md`
+4. **Summary Phase**: Create summary documents in research directory
+
+### Query Order Suggestion
+When needing to understand project status:
+1. Check `.kiro/memory/project/enhancement-progress.md` for overall progress
+2. Check `.kiro/research/[recent date]/` for latest research
+3. Use TodoWrite tool to view current tasks
+4. Check `.kiro/memory/project/decisions.md` for key decisions

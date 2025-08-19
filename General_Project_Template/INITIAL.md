@@ -1,4 +1,22 @@
-# Feature Specification Template
+# Feature Specification Template (EPE + SDD Enhanced)
+
+## 📚 EXPLORATION PHASE
+[This section will be auto-filled by /explore command]
+
+### Context Understanding
+- Existing codebase patterns:
+- Related modules and dependencies:
+- Technical constraints discovered:
+- Potential challenges identified:
+
+## 📋 PLANNING PHASE
+[This section will be auto-filled by /plan command]
+
+### Implementation Strategy
+- Technical approach:
+- Task breakdown with estimates:
+- Risk mitigation plan:
+- Success criteria:
 
 ## FEATURE
 [Describe the specific feature or requirement in detail. Be extremely specific about what needs to be built, including user flows, expected behaviors, and acceptance criteria.]
@@ -51,3 +69,31 @@ export const requireAuth = async (req, res, next) => {
 - Security: All passwords must be hashed with bcrypt (min 10 rounds)
 - Performance: Auth checks should complete within 100ms
 ```
+
+## ✅ VERIFICATION CRITERIA
+[This section will be auto-filled by /verify command]
+
+### Testing Requirements
+- Unit test coverage target:
+- Integration test scenarios:
+- Performance benchmarks:
+- Security validation:
+
+### Deployment Checklist
+- [ ] All tests passing
+- [ ] Documentation updated
+- [ ] Performance criteria met
+- [ ] Security review completed
+- [ ] Rollback plan prepared
+
+## 📊 WORKFLOW STATUS
+
+### EPE + SDD Phase Tracking
+```
+[✓] Exploration → [✓] Plan → [ ] Requirements → [ ] Design → [ ] Tasks → [ ] Execute → [ ] Verify
+```
+
+### Next Steps
+1. Complete exploration phase with `/explore [feature-name]`
+2. Create implementation plan with `/plan [feature-name]`
+3. Proceed with SDD workflow for detailed design

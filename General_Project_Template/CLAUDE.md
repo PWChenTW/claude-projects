@@ -281,6 +281,69 @@ feature-name/
 └── tasks.md           # 具體任務清單
 ```
 
+## 項目追蹤和記憶管理
+
+### 記憶系統結構
+專案使用分層記憶系統來管理知識和追蹤進度：
+
+```
+.kiro/
+├── memory/
+│   ├── global/           # 跨項目的持久知識
+│   ├── project/          # 當前項目的記憶
+│   │   ├── enhancement-progress.md  # 主要進度追蹤文檔
+│   │   └── decisions.md             # 重要決策記錄
+│   └── session/          # 當前會話的臨時記憶
+├── research/
+│   └── [YYYY-MM-DD]/    # 每日研究文檔
+│       ├── *.md          # 研究報告和分析
+│       └── decisions/    # 當日決策記錄
+└── logs/
+    ├── tasks.log         # 任務執行日誌
+    └── archive/          # 歸檔的週日誌
+```
+
+### 進度追蹤規則
+
+#### 必須更新進度的情況
+Claude 必須在以下情況更新進度追蹤：
+1. **完成子代理改造**：更新 `.kiro/memory/project/enhancement-progress.md`
+2. **做出重要決策**：記錄到 `.kiro/memory/project/decisions.md`
+3. **完成研究分析**：保存到 `.kiro/research/[當天日期]/`
+4. **架構或流程變更**：更新相關記憶文檔
+
+#### 更新方式
+- **進度文檔**：使用 Edit/MultiEdit 工具更新 markdown 文件
+- **待辦事項**：使用 TodoWrite 工具管理當前任務
+- **研究文檔**：使用 Write 工具創建新的研究報告
+
+### 任務日誌管理
+
+#### 使用 TodoWrite 工具
+```python
+# 任務狀態：pending（待辦）、in_progress（進行中）、completed（完成）
+# 一次只能有一個任務為 in_progress
+# 完成任務後立即標記為 completed
+```
+
+#### 任務日誌位置
+- **主要任務日誌**：`.kiro/logs/tasks.log`
+- **每週歸檔**：`.kiro/logs/archive/week-[N].log`
+
+### 知識更新流程
+
+1. **研究階段**：所有研究產出保存到 `.kiro/research/[日期]/`
+2. **決策階段**：重要決策更新到 `.kiro/memory/project/decisions.md`
+3. **實施階段**：進度更新到 `.kiro/memory/project/enhancement-progress.md`
+4. **總結階段**：創建總結文檔到研究目錄
+
+### 查詢順序建議
+當需要了解項目狀態時，按以下順序查詢：
+1. 先查看 `.kiro/memory/project/enhancement-progress.md` 了解整體進度
+2. 查看 `.kiro/research/[最近日期]/` 了解最新研究
+3. 使用 TodoWrite 工具查看當前待辦事項
+4. 查看 `.kiro/memory/project/decisions.md` 了解關鍵決策
+
 ## 多實例協作工作流
 
 ### 角色分配範例

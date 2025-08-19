@@ -2,6 +2,25 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## Architecture Overview
+
+### System Design Philosophy
+This repository implements a **hierarchical, context-aware AI collaboration framework** based on:
+- **Spec-Driven Development (SDD)** for structured workflow
+- **Explore-Plan-Execute (EPE)** for thorough implementation
+- **Vibe Coding principles** for safe AI autonomy
+- **Researcher pattern** for token-efficient sub-agents
+
+### Core Components
+```
+claude-projects/
+├── General_Project_Template/    # Web apps, tools, games
+├── Quant_Project_Template/      # Trading and finance
+├── .claude/                     # Global AI configuration
+├── .kiro/                       # Knowledge and memory
+└── docs/                        # Framework documentation
+```
+
 ## Repository Overview
 
 This is a template repository containing two AI-assisted development templates:
@@ -198,6 +217,40 @@ Claude MUST update the task log after completing any of the following:
 - Temporary debugging changes
 - Exploratory analysis without changes
 
+## 🏗️ System Architecture Layers (Vibe Coding)
+
+### Core vs Leaf Nodes Distinction
+
+#### 🔴 Core Architecture (Human Review Required)
+**Definition**: Foundation components where changes impact system stability
+- `/infrastructure/` - Database, auth, security infrastructure
+- `/config/production.*` - Production environment settings
+- `/core/domain/` - Business logic and domain models
+- Payment, authentication, authorization modules
+- **Review Level**: Strict (architecture + security + business)
+- **Test Coverage**: 100% required
+- **Deployment**: Requires explicit approval
+
+#### 🟢 Leaf Nodes (AI Autonomous Zone)
+**Definition**: Isolated components safe for rapid iteration
+- `/components/` - UI components and widgets
+- `/utils/` - Helper functions and utilities
+- `/tests/` - Test files and fixtures
+- `/docs/` - Documentation and examples
+- **Review Level**: Minimal (automated checks only)
+- **Test Coverage**: 60% acceptable
+- **Deployment**: Auto-deploy to staging
+
+#### 🟡 Boundary Layer (Context-Dependent)
+**Definition**: Components requiring case-by-case evaluation
+- `/api/` - API endpoints (evaluate data sensitivity)
+- `/services/` - Service layer (check dependencies)
+- **Review Level**: Variable based on impact analysis
+- **Test Coverage**: 80% recommended
+- **Deployment**: Staged rollout
+
+詳見 `docs/architecture/system-layers.md` 了解完整的層級劃分和安全準則。
+
 ## Project Memory and Progress Tracking
 
 ### Memory System Structure
@@ -237,6 +290,21 @@ When working on template improvements or framework enhancements, use the followi
 - **更新時機**：完成任務、做出決策、階段總結
 - **內容特點**：詳細、完整、可追溯
 - **包含**：完整進度、決策理由、歷史記錄
+
+### 📝 Session Memory Management
+
+**Session Memory (`.kiro/memory/session/`)** - 會話臨時記憶：
+- **Purpose**: Track progress within a single work session
+- **Auto-cleanup**: Cleared after 24 hours or session end
+- **Contents**:
+  ```
+  session/
+  ├── active_tasks.json    # Current todo items
+  ├── decisions.md         # Session decisions
+  ├── snippets.md          # Code snippets for reuse
+  └── notes.md             # Temporary notes
+  ```
+- **Usage**: Helps maintain context during long tasks without polluting permanent memory
 
 ### Progress Tracking Rules
 
